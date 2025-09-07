@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Sprint3
-=======
 # 🚀 API Check-in e Check-out de Motos no Pátio
 
 Este projeto é uma API REST desenvolvida em Java utilizando Spring Boot, que tem como objetivo gerenciar o check-in e check-out de motos em um pátio. O sistema permite o cadastro de motos e o controle de suas movimentações (entrada e saída).
@@ -47,9 +44,3 @@ Este projeto é uma API REST desenvolvida em Java utilizando Spring Boot, que te
 - Tratamento centralizado de erros
 - Uso de DTOs
 - Banco H2 configurado para testes
-
-  ## Nomes:
-- Gustavo Tonato - RM555393
-- Diogo Paquete Weyne - RM558380
-- João Victor De Souza - RM555290
->>>>>>> 7cc2ce5 (Update)

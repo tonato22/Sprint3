@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${title}">Sistema Pátio</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+  <h1>🚦 Sistema de Pátio</h1>
+  <nav>
+    <a th:href="@{/motos}">Motos</a> |
+    <a th:href="@{/registros}">Registros</a>
+  </nav>
+</header>
+<hr/>
