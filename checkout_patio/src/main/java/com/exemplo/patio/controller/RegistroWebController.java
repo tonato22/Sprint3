@@ -61,4 +61,24 @@ public class RegistroWebController {
         return "redirect:/registros";
     }
 
+    // EDITAR REGISTROS
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        Registro registro = registroRepo.findById(id).orElseThrow(()-> new IllegalArgumentException("Registro Invalido " + id));
+        model.addAttribute("registro", registro);
+        return "registros/form";
+    }
+
+    // ATUALIZAR OS REGISTROS
+    @PostMapping("editar/{id}")
+    public String atualizarRegistro(@PathVariable Long id, @ModelAttribute Registro registroAtualizado){
+        registroAtualizado.setId(id);
+        registroService.salvarRegistro(registroAtualizado,id);
+        return "redirect:/registros";
+    }
+
+    // FAZER O DELETE
+
+
+
 }

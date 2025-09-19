@@ -10,4 +10,5 @@ public interface MotoRepository extends JpaRepository<Moto, Long> {
     Optional<Moto> findByPlaca(String placa);
     Page<Moto> findByPlacaContainingIgnoreCase(String placa, Pageable pageable);
 
+
 }

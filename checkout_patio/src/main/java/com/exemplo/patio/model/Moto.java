@@ -11,9 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 public class Moto {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @NotBlank
     @Pattern(regexp = "[A-Z]{3}[0-9][0-9A-Z][0-9]{2}", message = "Placa inválida")
     @Column(unique = true, nullable = false)

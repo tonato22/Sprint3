@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -39,6 +40,9 @@ public class MotoService {
     }
     public Moto salvar(Moto moto) {
         return repo.save(moto);
+    }
+    public Optional<Moto> buscarPorPlacaUnica(String placa) {
+        return motoRepository.findByPlaca(placa);
     }
 
 }

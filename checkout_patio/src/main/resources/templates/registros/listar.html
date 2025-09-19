@@ -27,10 +27,13 @@
         <td th:text="${registro.moto.placa} + ' - ' + ${registro.moto.modelo}"></td>
         <td th:text="${#dates.format(registro.checkIn, 'dd/MM/yyyy HH:mm')}"></td>
         <td th:text="${registro.checkOut != null ? #dates.format(registro.checkOut, 'dd/MM/yyyy HH:mm') : '---'}"></td>
+
         <td>
             <form th:if="${registro.checkOut == null}" th:action="@{'/registros/checkout/' + ${registro.id}}" method="post" style="display:inline">
                 <button type="submit">Check-out</button>
             </form>
+            <a th:href="@{/registros/editar/{id}(id=${registro.id})}">Editar</a>
+
             <form th:action="@{'/registros/delete/' + ${registro.id}}" method="post" style="display:inline">
                 <button type="submit">Excluir</button>
             </form>
