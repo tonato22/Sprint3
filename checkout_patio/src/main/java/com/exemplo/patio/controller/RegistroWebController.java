@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/registros")
@@ -49,8 +49,8 @@ public class RegistroWebController {
 
     // SALVAR CHECK-IN
     @PostMapping
-    public String salvar(@ModelAttribute Registro registro, @RequestParam Long motoId) {
-        registroService.salvarRegistro(registro, motoId);
+    public String salvar(@ModelAttribute Registro registro, @RequestParam String placa) {
+        registroService.salvarRegistro(registro, placa);
         return "redirect:/registros";
     }
 
@@ -71,14 +71,37 @@ public class RegistroWebController {
 
     // ATUALIZAR OS REGISTROS
     @PostMapping("editar/{id}")
-    public String atualizarRegistro(@PathVariable Long id, @ModelAttribute Registro registroAtualizado){
-        registroAtualizado.setId(id);
-        registroService.salvarRegistro(registroAtualizado,id);
+    public String atualizarRegistro(@PathVariable Long id,
+                                    @RequestParam String placa, // recebe a placa da moto do formulário
+                                    @ModelAttribute Registro registroAtualizado) {
+
+
+      Moto moto = motoRepo.findById(placa)
+                .orElseThrow(() -> new EntityNotFoundException("Moto não encontrada"));
+
+        Registro registroExistente = registroRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Registro não encontrado"));
+
+        registroExistente.setMoto(moto);
+        registroExistente.setCheckIn(LocalDateTime.now());
+
+
+
+        registroRepo.save(registroExistente);
+
         return "redirect:/registros";
     }
 
-    // FAZER O DELETE
+   // DELETAR REGISTROS
+    @PostMapping("/delete/{id}")
+    public String deletarRegistro(@PathVariable Long id) {
+        Registro registro = registroRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Registro não encontrado"));
 
+        registroRepo.delete(registro);
+
+        return "redirect:/registros";
+    }
 
 
 }

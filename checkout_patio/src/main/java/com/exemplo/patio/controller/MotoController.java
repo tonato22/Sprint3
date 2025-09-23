@@ -32,5 +32,18 @@ public class MotoController {
     public ResponseEntity < Page<Moto>> buscarPorPlaca(@RequestParam String placa, Pageable pageable) {
         return ResponseEntity.ok(motoService.buscarPorPlaca(placa, pageable));
     }
+    @PutMapping("/{placa}")
+    public ResponseEntity<Moto> atualizar(@PathVariable String placa, @RequestBody @Valid MotoDTO dto) {
+        Moto motoAtualizada = motoService.atualizar(placa, dto);
+        return ResponseEntity.ok(motoAtualizada);
+    }
+
+    @DeleteMapping("/{placa}")
+    public ResponseEntity<Void> deletar(@PathVariable String placa) {
+        motoService.deletar(placa);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 }

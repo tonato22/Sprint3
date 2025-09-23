@@ -3,6 +3,7 @@ package com.exemplo.patio.service;
 import com.exemplo.patio.dto.MotoDTO;
 import com.exemplo.patio.model.Moto;
 import com.exemplo.patio.repository.MotoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,7 @@ public class MotoService {
     }
 
     public Moto cadastrar(MotoDTO dto) {
-        Moto moto = new Moto(null, dto.getPlaca(), dto.getModelo());
+        Moto moto = new Moto(dto.getPlaca(), dto.getModelo());
         return repo.save(moto);
     }
     public Page<Moto> buscarPorPlaca(String placa, Pageable pageable) {
@@ -44,5 +45,23 @@ public class MotoService {
     public Optional<Moto> buscarPorPlacaUnica(String placa) {
         return motoRepository.findByPlaca(placa);
     }
+    public void excluir(String placa){
+        if (!motoRepository.existsById(placa)) {
+            throw new IllegalArgumentException("Moto não encontrada " + placa);
+        }
+        motoRepository.deleteById(placa);
+    }
+    public Moto atualizar(String placa, MotoDTO dto) {
+        Moto motoExistente = repo.findById(placa)
+                .orElseThrow(() -> new EntityNotFoundException("Moto não encontrada"));
+        motoExistente.setModelo(dto.getModelo());
+        return repo.save(motoExistente);
+    }
+    public void deletar(String placa) {
+        Moto moto = repo.findById(placa)
+                .orElseThrow(() -> new EntityNotFoundException("Moto não encontrada"));
+        repo.delete(moto);
+    }
+
 
 }

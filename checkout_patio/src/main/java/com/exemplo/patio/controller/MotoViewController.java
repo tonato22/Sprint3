@@ -50,7 +50,12 @@ public class MotoViewController {
         return "redirect:/motos";
     }
 
-    //FAZER O DELETE
+
+    @PostMapping("/excluir/{placa}")
+    public String excluir(@PathVariable String placa) {
+        motoService.excluir(placa);
+        return "redirect:/motos";
+    }
 
 
 }

@@ -54,8 +54,8 @@ public class RegistroService {
         return registroRepo.findAll();
     }
 
-    public String salvarRegistro(Registro registro, Long motoId) {
-        Moto moto = motoRepo.findById(motoId)
+    public String salvarRegistro(Registro registro, String placa) {
+        Moto moto = motoRepo.findById(placa)
                 .orElseThrow(() -> new EntityNotFoundException("Moto não encontrada"));
 
         registro.setMoto(moto);
