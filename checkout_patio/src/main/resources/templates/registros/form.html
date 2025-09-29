@@ -11,14 +11,27 @@
 <h1>Editar Registro</h1>
 
 <form th:action="@{/registros/editar/{id}(id=${registro.id})}" th:object="${registro}" method="post">
-  <label>Moto:</label>
-  <select name="placa" required>
-    <option th:each="moto : ${motos}" th:value="${moto.placa}"
-            th:text="${moto.placa} + ' - ' + ${moto.modelo}"
-            th:selected="${moto.placa == registro.moto.placa}">
-    </option>
-  </select>
-  <br/><br/>
+
+  <div>
+    <label>Moto:</label>
+    <select name="placa" th:field="*{moto}">
+      <option value="">-- Selecione uma moto --</option>
+      <option th:each="moto : ${motos}" th:value="${moto.placa}"
+              th:text="${moto.placa} + ' - ' + ${moto.modelo}"
+              th:selected="${moto.placa == registro.moto.placa}">
+      </option>
+    </select>
+    <span th:if="${#fields.hasErrors('moto')}" th:errors="*{moto}"></span>
+  </div>
+  <br/>
+
+  <div>
+    <label>Check-in:</label>
+    <input type="datetime-local" th:field="*{checkIn}"/>
+    <span th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"></span>
+  </div>
+  <br/>
+
   <button type="submit">Atualizar</button>
 </form>
 

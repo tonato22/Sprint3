@@ -2,8 +2,10 @@ package com.exemplo.patio.controller;
 
 import com.exemplo.patio.model.Moto;
 import com.exemplo.patio.service.MotoService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +34,11 @@ public class MotoViewController {
     }
 
     @PostMapping
-    public String salvar(@ModelAttribute Moto moto){
+    public String salvar(@Valid @ModelAttribute Moto moto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("moto", moto);
+            return "motos/novo";
+        }
         motoService.salvar(moto);
         return "redirect:/motos";
     }
@@ -44,7 +50,11 @@ public class MotoViewController {
     }
 
     @PostMapping("/editar/{placa}")
-    public String atualizar(@PathVariable String placa,@ModelAttribute Moto motoAtualizada) {
+    public String atualizar(@PathVariable String placa,@Valid @ModelAttribute Moto motoAtualizada,BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("moto", motoAtualizada);
+            return "motos/form";
+        }
         motoAtualizada.setPlaca(placa);
         motoService.salvar(motoAtualizada);
         return "redirect:/motos";

@@ -8,8 +8,10 @@ import com.exemplo.patio.repository.RegistroRepository;
 import com.exemplo.patio.service.MotoService;
 import com.exemplo.patio.service.RegistroService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -49,7 +51,11 @@ public class RegistroWebController {
 
     // SALVAR CHECK-IN
     @PostMapping
-    public String salvar(@ModelAttribute Registro registro, @RequestParam String placa) {
+    public String salvar(@Valid  @ModelAttribute Registro registro,BindingResult result, @RequestParam String placa,Model model ) {
+        if (result.hasErrors()) {
+            model.addAttribute("motos", motoService.listarMotos());
+            return "registros/novo";
+        }
         registroService.salvarRegistro(registro, placa);
         return "redirect:/registros";
     }
@@ -72,8 +78,12 @@ public class RegistroWebController {
     // ATUALIZAR OS REGISTROS
     @PostMapping("editar/{id}")
     public String atualizarRegistro(@PathVariable Long id,
-                                    @RequestParam String placa, // recebe a placa da moto do formulário
-                                    @ModelAttribute Registro registroAtualizado) {
+                                    @RequestParam String placa,
+                                    @Valid @ModelAttribute Registro registroAtualizado,BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("motos", motoService.listarMotos());
+            return "registros/form";
+        }
 
 
       Moto moto = motoRepo.findById(placa)
