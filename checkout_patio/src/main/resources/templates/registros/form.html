@@ -3,39 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <title>Editar Registro</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    select, input[type="datetime-local"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    select:focus, input[type="datetime-local"]:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 4px rgba(0,123,255,0.5);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 15px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-update {
+      background: #007bff;
+      color: #fff;
+    }
+
+    .btn-update:hover {
+      background: #0056b3;
+    }
+
+    .btn-back {
+      background: #6c757d;
+      color: #fff;
+      margin-left: 10px;
+    }
+
+    .btn-back:hover {
+      background: #5a6268;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    span[th\\:errors] {
+      color: red;
+      font-size: 13px;
+    }
+  </style>
 </head>
 <body>
 <th:block th:replace="fragments/header :: header"></th:block>
 
-<h1>Editar Registro</h1>
+<div class="container">
+  <h1>Editar Registro</h1>
 
-<form th:action="@{/registros/editar/{id}(id=${registro.id})}" th:object="${registro}" method="post">
+  <form th:action="@{/registros/editar/{id}(id=${registro.id})}" th:object="${registro}" method="post">
 
-  <div>
-    <label>Moto:</label>
-    <select name="placa" th:field="*{moto}">
-      <option value="">-- Selecione uma moto --</option>
-      <option th:each="moto : ${motos}" th:value="${moto.placa}"
-              th:text="${moto.placa} + ' - ' + ${moto.modelo}"
-              th:selected="${moto.placa == registro.moto.placa}">
-      </option>
-    </select>
-    <span th:if="${#fields.hasErrors('moto')}" th:errors="*{moto}"></span>
-  </div>
-  <br/>
+    <div>
+      <label>Moto:</label>
+      <select name="placa" th:field="*{moto}">
+        <option value="">-- Selecione uma moto --</option>
+        <option th:each="moto : ${motos}" th:value="${moto.placa}"
+                th:text="${moto.placa} + ' - ' + ${moto.modelo}"
+                th:selected="${moto.placa == registro.moto.placa}">
+        </option>
+      </select>
+      <span th:if="${#fields.hasErrors('moto')}" th:errors="*{moto}"></span>
+    </div>
 
-  <div>
-    <label>Check-in:</label>
-    <input type="datetime-local" th:field="*{checkIn}"/>
-    <span th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"></span>
-  </div>
-  <br/>
+    <div>
+      <label>Check-in:</label>
+      <input type="datetime-local" th:field="*{checkIn}"/>
+      <span th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"></span>
+    </div>
 
-  <button type="submit">Atualizar</button>
-</form>
-
-<a th:href="@{/registros}">Voltar</a>
+    <div class="actions">
+      <button type="submit" class="btn btn-update">Atualizar</button>
+      <a th:href="@{/registros}" class="btn btn-back">Voltar</a>
+    </div>
+  </form>
+</div>
 
 <th:block th:replace="fragments/footer :: footer"></th:block>
 </body>

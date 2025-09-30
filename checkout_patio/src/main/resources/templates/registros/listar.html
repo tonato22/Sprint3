@@ -3,44 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Registros</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-new {
+            background: #28a745;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .btn-new:hover {
+            background: #218838;
+        }
+
+        .btn-checkout {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-checkout:hover {
+            background: #e0a800;
+        }
+
+        .btn-edit {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .btn-edit:hover {
+            background: #0056b3;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table thead {
+            background: #007bff;
+            color: #fff;
+        }
+
+        table th, table td {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        table tr:hover {
+            background: #f1f1f1;
+        }
+
+        .actions form, .actions a {
+            display: inline-block;
+            margin: 2px;
+        }
+    </style>
 </head>
 <body>
 <th:block th:replace="fragments/header :: header"></th:block>
 
-<h1>Registros de Motos</h1>
-<a th:href="@{/registros/novo}">Novo Check-in</a>
+<div class="container">
+    <h1>Registros de Motos</h1>
+    <a th:href="@{/registros/novo}" class="btn btn-new">➕ Novo Check-in</a>
 
-<table border="1" cellpadding="5" cellspacing="0">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Moto</th>
-        <th>Check-in</th>
-        <th>Check-out</th>
-        <th>Ações</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="registro : ${registros}">
-        <td th:text="${registro.id}"></td>
-        <td th:text="${registro.moto.placa} + ' - ' + ${registro.moto.modelo}"></td>
-        <td th:text="${#dates.format(registro.checkIn, 'dd/MM/yyyy HH:mm')}"></td>
-        <td th:text="${registro.checkOut != null ? #dates.format(registro.checkOut, 'dd/MM/yyyy HH:mm') : '---'}"></td>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Moto</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="registro : ${registros}">
+            <td th:text="${registro.id}"></td>
+            <td th:text="${registro.moto.placa} + ' - ' + ${registro.moto.modelo}"></td>
+            <td th:text="${#dates.format(registro.checkIn, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${registro.checkOut != null ? #dates.format(registro.checkOut, 'dd/MM/yyyy HH:mm') : '---'}"></td>
 
-        <td>
-            <form th:if="${registro.checkOut == null}" th:action="@{'/registros/checkout/' + ${registro.id}}" method="post" style="display:inline">
-                <button type="submit">Check-out</button>
-            </form>
-            <a th:href="@{/registros/editar/{id}(id=${registro.id})}">Editar</a>
+            <td class="actions">
+                <form th:if="${registro.checkOut == null}" th:action="@{'/registros/checkout/' + ${registro.id}}" method="post">
+                    <button type="submit" class="btn btn-checkout">Check-out</button>
+                </form>
 
-            <form th:action="@{'/registros/delete/' + ${registro.id}}" method="post" style="display:inline">
-                <button type="submit">Excluir</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                <a th:href="@{/registros/editar/{id}(id=${registro.id})}" class="btn btn-edit">Editar</a>
+
+                <form th:action="@{'/registros/delete/' + ${registro.id}}" method="post">
+                    <button type="submit" class="btn btn-delete">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <th:block th:replace="fragments/footer :: footer"></th:block>
 </body>

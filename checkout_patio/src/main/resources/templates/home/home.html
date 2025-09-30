@@ -2,12 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4a90e2, #007aff);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .home-container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007aff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #005bb5;
+        }
+
+        .btn.logout {
+            background-color: #e63946;
+        }
+
+        .btn.logout:hover {
+            background-color: #b22222;
+        }
+    </style>
 </head>
 <body>
-<h1>Bem-vindo!</h1>
+<div class="home-container">
+    <h1>Bem-vindo!</h1>
 
-<form th:action="@{/logout}" method="post">
-    <button type="submit">Logout</button>
-</form>
+    <!-- Botão para a área de motos -->
+    <a th:href="@{/motos}" class="btn">Gerenciar Motos</a>
+
+    <!-- Botão para a área de registros -->
+    <a th:href="@{/registros}" class="btn">Gerenciar Registros</a>
+
+    <!-- Botão de logout -->
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn logout">Logout</button>
+    </form>
+</div>
 </body>
 </html>

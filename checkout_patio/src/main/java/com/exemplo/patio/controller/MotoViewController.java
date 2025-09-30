@@ -6,10 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 public class MotoViewController {
@@ -33,7 +31,7 @@ public class MotoViewController {
         return "motos/novo";
     }
 
-    @PostMapping
+    @PostMapping("/motos")
     public String salvar(@Valid @ModelAttribute Moto moto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("moto", moto);
@@ -42,15 +40,20 @@ public class MotoViewController {
         motoService.salvar(moto);
         return "redirect:/motos";
     }
-    @GetMapping("/editar/{placa}")
+
+    @GetMapping("/motos/editar/{placa}")
     public String editar(@PathVariable("placa") String placa, Model model) {
-        Moto moto = motoService.buscarPorPlacaUnica(placa).orElseThrow(()->new IllegalArgumentException("Moto não encontrada" + placa));
+        Moto moto = motoService.buscarPorPlacaUnica(placa)
+                .orElseThrow(() -> new IllegalArgumentException("Moto não encontrada: " + placa));
         model.addAttribute("moto", moto);
         return "motos/form";
     }
 
-    @PostMapping("/editar/{placa}")
-    public String atualizar(@PathVariable String placa,@Valid @ModelAttribute Moto motoAtualizada,BindingResult result, Model model) {
+    @PostMapping("/motos/editar/{placa}")
+    public String atualizar(@PathVariable String placa,
+                            @Valid @ModelAttribute Moto motoAtualizada,
+                            BindingResult result,
+                            Model model) {
         if (result.hasErrors()) {
             model.addAttribute("moto", motoAtualizada);
             return "motos/form";
@@ -59,6 +62,7 @@ public class MotoViewController {
         motoService.salvar(motoAtualizada);
         return "redirect:/motos";
     }
+
 
 
     @PostMapping("/excluir/{placa}")

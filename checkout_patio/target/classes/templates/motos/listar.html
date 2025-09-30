@@ -1,15 +1,115 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header"></head>
-<body>
-<div>
-  <h2>Lista de Motos</h2>
-  <a th:href="@{/motos/novo}">➕ Nova Moto</a>
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Motos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
 
-  <table border="1" cellpadding="5" cellspacing="0">
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .actions-top {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-home {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .btn-home:hover {
+      background-color: #1e7e34;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    thead {
+      background-color: #007bff;
+      color: white;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .btn-warning {
+      background-color: #ffc107;
+      color: black;
+    }
+
+    .btn-warning:hover {
+      background-color: #e0a800;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #a71d2a;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Lista de Motos</h2>
+
+  <div class="actions-top">
+    <a th:href="@{/motos/novo}" class="btn btn-primary">➕ Nova Moto</a>
+    <a th:href="@{/home}" class="btn btn-home">🏠 Home</a>
+  </div>
+
+  <table>
     <thead>
     <tr>
-      <th>ID</th>
       <th>Placa</th>
       <th>Modelo</th>
       <th>Ações</th>
@@ -17,20 +117,17 @@
     </thead>
     <tbody>
     <tr th:each="moto : ${motos}">
-      <td th:text="${moto.id}"></td>
       <td th:text="${moto.placa}"></td>
       <td th:text="${moto.modelo}"></td>
       <td>
-        <a th:href="@{'/motos/editar/' + ${moto.id}}">Editar</a> |
-        <form th:action="@{'/motos/excluir/' + ${moto.id}}" method="post" style="display:inline">
-          <button type="submit">Excluir</button>
+        <a th:href="@{'/motos/editar/' + ${moto.placa}}" class="btn btn-warning">Editar</a>
+        <form th:action="@{'/excluir/' + ${moto.placa}}" method="post" style="display:inline">
+          <button type="submit" class="btn btn-danger">Excluir</button>
         </form>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
-
-<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

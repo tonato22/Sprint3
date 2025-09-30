@@ -3,24 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <title>Novo Check-in</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #444;
+    }
+
+    select, input {
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    select:focus, input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-save {
+      background: #28a745;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .btn-save:hover {
+      background: #218838;
+    }
+
+    .btn-back {
+      background: #6c757d;
+      color: #fff;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-back:hover {
+      background: #5a6268;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
 </head>
 <body>
 <th:block th:replace="fragments/header :: header"></th:block>
 
-<h1>Novo Check-in</h1>
+<div class="container">
+  <h1>Novo Check-in</h1>
 
-<form th:action="@{/registros}" th:object="${registro}" method="post">
-  <label>Moto:</label>
-  <select name="motoId" required>
-    <option th:each="moto : ${motos}" th:value="${moto.id}"
-            th:text="${moto.placa} + ' - ' + ${moto.modelo}"></option>
-  </select>
-  <br/><br/>
-  <button type="submit">Salvar Check-in</button>
-</form>
+  <form th:action="@{/registros}" th:object="${registro}" method="post">
+    <label>Moto:</label>
+    <select name="motoId" required>
+      <option value="">-- Selecione uma moto --</option>
+      <option th:each="moto : ${motos}" th:value="${moto.id}"
+              th:text="${moto.placa} + ' - ' + ${moto.modelo}"></option>
+    </select>
 
-<a th:href="@{/registros}">Voltar</a>
+    <div class="actions">
+      <button type="submit" class="btn btn-save">Salvar Check-in</button>
+      <a th:href="@{/registros}" class="btn btn-back">Voltar</a>
+    </div>
+  </form>
+</div>
 
 <th:block th:replace="fragments/footer :: footer"></th:block>
 </body>

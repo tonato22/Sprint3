@@ -2,21 +2,102 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4a90e2, #007aff);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #007aff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 122, 255, 0.5);
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #007aff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+        }
+
+        .msg {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .msg.success {
+            color: green;
+        }
+
+        .msg.error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-<h2>Login</h2>
+<div class="login-container">
+    <h2>Login</h2>
 
-<div th:if="${msg}" th:text="${msg}" style="color:green"></div>
-<div th:if="${errorMsg}" th:text="${errorMsg}" style="color:red"></div>
+    <div th:if="${msg}" th:text="${msg}" class="msg success"></div>
+    <div th:if="${errorMsg}" th:text="${errorMsg}" class="msg error"></div>
 
-<form th:action="@{/login}" method="post">
-    <label>Usuário</label>
-    <input type="text" name="username" required><br>
+    <form th:action="@{/login}" method="post">
+        <label>Usuário</label>
+        <input type="text" name="username" required>
 
-    <label>Senha</label>
-    <input type="password" name="password" required><br>
+        <label>Senha</label>
+        <input type="password" name="password" required>
 
-    <button type="submit">Entrar</button>
-</form>
+        <button type="submit">Entrar</button>
+    </form>
+</div>
 </body>
 </html>

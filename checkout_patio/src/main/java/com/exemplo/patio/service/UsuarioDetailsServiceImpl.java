@@ -27,10 +27,11 @@ public class UsuarioDetailsServiceImpl implements UserDetailsService {
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(usuario.getUsername())
-                .password(usuario.getSenha())          // senha já deve estar BCRYPT
-                .roles(roles)                          // adiciona "ROLE_" automaticamente
+                .password(usuario.getSenha())          // senha já em BCRYPT
+                .authorities(usuario.getRoles().toArray(new String[0])) // já vem com ROLE_ no banco
                 .disabled(!usuario.isAtivo())
                 .accountLocked(!usuario.isAtivo())
                 .build();
+
     }
 }

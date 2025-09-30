@@ -1,0 +1,17 @@
+com\exemplo\patio\controller\MotoViewController.class
+com\exemplo\patio\repository\RegistroRepository.class
+com\exemplo\patio\service\MotoService.class
+com\exemplo\patio\repository\MotoRepository.class
+com\exemplo\patio\service\UsuarioDetailsServiceImpl.class
+com\exemplo\patio\model\Moto.class
+com\exemplo\patio\dto\MotoDTO.class
+com\exemplo\patio\service\RegistroService.class
+com\exemplo\patio\repository\UsuarioRepository.class
+com\exemplo\patio\PatioApplication.class
+com\exemplo\patio\config\SecurityConfig.class
+com\exemplo\patio\model\Usuario.class
+com\exemplo\patio\model\Registro.class
+com\exemplo\patio\controller\AuthController.class
+com\exemplo\patio\dto\RegistroDTO.class
+com\exemplo\patio\execption\ApiExceptionHandler.class
+com\exemplo\patio\controller\RegistroWebController.class
