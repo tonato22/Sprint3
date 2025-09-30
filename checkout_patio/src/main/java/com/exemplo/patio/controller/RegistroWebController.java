@@ -34,14 +34,14 @@ public class RegistroWebController {
         this.motoService = motoService;
     }
 
-    // LISTAR REGISTROS
+
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("registros", registroService.listarTodos());
         return "registros/listar";
     }
 
-    // FORMULÁRIO NOVO REGISTRO
+
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("registro", new Registro());
@@ -49,7 +49,7 @@ public class RegistroWebController {
         return "registros/novo";
     }
 
-    // SALVAR CHECK-IN
+
     @PostMapping
     public String salvar(@Valid  @ModelAttribute Registro registro,BindingResult result, @RequestParam String placa,Model model ) {
         if (result.hasErrors()) {
@@ -60,14 +60,14 @@ public class RegistroWebController {
         return "redirect:/registros";
     }
 
-    // CHECK-OUT
+
     @PostMapping("/checkout/{id}")
     public String checkOut(@PathVariable Long id, @RequestParam RegistroDTO registroDTO) {
         registroService.checkOut(id, registroDTO);
         return "redirect:/registros";
     }
 
-    // EDITAR REGISTROS
+
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         Registro registro = registroRepo.findById(id).orElseThrow(()-> new IllegalArgumentException("Registro Invalido " + id));
@@ -75,7 +75,7 @@ public class RegistroWebController {
         return "registros/form";
     }
 
-    // ATUALIZAR OS REGISTROS
+
     @PostMapping("editar/{id}")
     public String atualizarRegistro(@PathVariable Long id,
                                     @RequestParam String placa,
@@ -102,7 +102,7 @@ public class RegistroWebController {
         return "redirect:/registros";
     }
 
-   // DELETAR REGISTROS
+
     @PostMapping("/delete/{id}")
     public String deletarRegistro(@PathVariable Long id) {
         Registro registro = registroRepo.findById(id)

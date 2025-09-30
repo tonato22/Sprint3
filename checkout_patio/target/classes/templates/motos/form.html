@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<div>
+    <h2>Editar Moto</h2>
+
+    <form th:action="@{'/motos/editar/' + ${moto.placa}}" th:object="${moto}" method="post">
+        <div>
+            <label>Placa:</label>
+            <input type="text" th:field="*{placa}" readonly/>
+            <span th:if="${#fields.hasErrors('placa')}" th:errors="*{placa}"></span>
+        </div>
+        <br/>
+
+        <div>
+            <label>Modelo:</label>
+            <input type="text" th:field="*{modelo}" required maxlength="50"/>
+            <span th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"></span>
+        </div>
+        <br/>
+
+        <button type="submit">Atualizar</button>
+    </form>
+
+    <a th:href="@{/motos}">Voltar</a>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

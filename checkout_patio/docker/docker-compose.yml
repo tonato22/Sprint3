@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: databasepatio
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" # Map container port 5432 to host port 5432
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: gustavopostgre@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 123
+    ports:
+      - "8081:80" # Map container port 80 to host port 8081
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

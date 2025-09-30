@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Novo Check-in</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<h1>Novo Check-in</h1>
+
+<form th:action="@{/registros}" th:object="${registro}" method="post">
+  <label>Moto:</label>
+  <select name="motoId" required>
+    <option th:each="moto : ${motos}" th:value="${moto.id}"
+            th:text="${moto.placa} + ' - ' + ${moto.modelo}"></option>
+  </select>
+  <br/><br/>
+  <button type="submit">Salvar Check-in</button>
+</form>
+
+<a th:href="@{/registros}">Voltar</a>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

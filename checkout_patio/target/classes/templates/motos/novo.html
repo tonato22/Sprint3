@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<div>
+    <h2>Nova Moto</h2>
+
+    <form th:action="@{/motos}" th:object="${moto}" method="post">
+        <label>Placa:</label>
+        <input type="text" th:field="*{placa}" required maxlength="20"/>
+        <br/><br/>
+
+        <label>Modelo:</label>
+        <input type="text" th:field="*{modelo}" required maxlength="50"/>
+        <br/><br/>
+
+        <button type="submit">Salvar</button>
+    </form>
+
+    <a th:href="@{/motos}">Voltar</a>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
