@@ -58,15 +58,15 @@
 </head>
 <body>
 <div class="home-container">
-    <h1>Bem-vindo!</h1>
+    <h1>Bem-vindo ao Gerenciador de Pátio!</h1>
 
-    <!-- Botão para a área de motos -->
+
     <a th:href="@{/motos}" class="btn">Gerenciar Motos</a>
 
-    <!-- Botão para a área de registros -->
+
     <a th:href="@{/registros}" class="btn">Gerenciar Registros</a>
 
-    <!-- Botão de logout -->
+
     <form th:action="@{/logout}" method="post">
         <button type="submit" class="btn logout">Logout</button>
     </form>
