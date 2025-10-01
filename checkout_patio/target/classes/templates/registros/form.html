@@ -6,21 +6,24 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f6fa;
+      background: #f4f6f9;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
-    .container {
-      max-width: 600px;
-      margin: 40px auto;
+    .form-container {
       background: #fff;
-      padding: 25px 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 30px 40px;
+      border-radius: 10px;
+      width: 400px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     }
 
-    h1 {
+    h2 {
       text-align: center;
       margin-bottom: 20px;
       color: #333;
@@ -28,100 +31,92 @@
 
     label {
       font-weight: bold;
-      margin-bottom: 6px;
       display: block;
+      margin-bottom: 6px;
+      color: #555;
     }
 
-    select, input[type="datetime-local"] {
+    input, select {
       width: 100%;
       padding: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 18px;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 15px;
     }
 
-    select:focus, input[type="datetime-local"]:focus {
-      outline: none;
-      border-color: #007bff;
-      box-shadow: 0 0 4px rgba(0,123,255,0.5);
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 15px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .btn-update {
-      background: #007bff;
-      color: #fff;
-    }
-
-    .btn-update:hover {
-      background: #0056b3;
-    }
-
-    .btn-back {
-      background: #6c757d;
-      color: #fff;
-      margin-left: 10px;
-    }
-
-    .btn-back:hover {
-      background: #5a6268;
+    input[readonly] {
+      background-color: #f0f0f0;
+      cursor: not-allowed;
     }
 
     .actions {
-      text-align: center;
-      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
     }
 
-    span[th\\:errors] {
-      color: red;
-      font-size: 13px;
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background-color: #545b62;
     }
   </style>
 </head>
 <body>
-<th:block th:replace="fragments/header :: header"></th:block>
-
-<div class="container">
-  <h1>Editar Registro</h1>
+<div class="form-container">
+  <h2>Editar Registro</h2>
 
   <form th:action="@{/registros/editar/{id}(id=${registro.id})}" th:object="${registro}" method="post">
 
+    <!-- Mostrar a moto apenas para referência -->
     <div>
       <label>Moto:</label>
-      <select name="placa" th:field="*{moto}">
-        <option value="">-- Selecione uma moto --</option>
-        <option th:each="moto : ${motos}" th:value="${moto.placa}"
-                th:text="${moto.placa} + ' - ' + ${moto.modelo}"
-                th:selected="${moto.placa == registro.moto.placa}">
-        </option>
-      </select>
-      <span th:if="${#fields.hasErrors('moto')}" th:errors="*{moto}"></span>
+      <input type="text" th:value="${registro.moto.placa} + ' - ' + ${registro.moto.modelo}" readonly/>
     </div>
 
+    <!-- Mostrar o check-in apenas para referência -->
     <div>
       <label>Check-in:</label>
-      <input type="datetime-local" th:field="*{checkIn}"/>
-      <span th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"></span>
+      <input type="text"
+             th:value="${#temporals.format(registro.checkIn, 'dd/MM/yyyy HH:mm')}"
+             readonly/>
+    </div>
+
+    <!-- Campo editável: Check-out -->
+    <div>
+      <label>Check-out:</label>
+      <input type="datetime-local"
+             th:field="*{checkOut}"
+             th:value="${registro.checkOut != null ? #temporals.format(registro.checkOut, 'yyyy-MM-dd''T''HH:mm') : ''}"/>
     </div>
 
     <div class="actions">
-      <button type="submit" class="btn btn-update">Atualizar</button>
-      <a th:href="@{/registros}" class="btn btn-back">Voltar</a>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a th:href="@{/registros}" class="btn btn-secondary">Voltar</a>
     </div>
   </form>
 </div>
-
-<th:block th:replace="fragments/footer :: footer"></th:block>
 </body>
 </html>

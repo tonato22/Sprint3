@@ -51,14 +51,37 @@ public class RegistroWebController {
 
 
     @PostMapping
-    public String salvar(@Valid  @ModelAttribute Registro registro,BindingResult result, @RequestParam String placa,Model model ) {
+    public String salvar(@Valid @ModelAttribute Registro registro,
+                         BindingResult result,
+                         Model model) {
+
+
+
         if (result.hasErrors()) {
             model.addAttribute("motos", motoService.listarMotos());
             return "registros/novo";
         }
-        registroService.salvarRegistro(registro, placa);
+
+
+        if (registro.getMoto() != null && registro.getMoto().getPlaca() != null) {
+            String placa = registro.getMoto().getPlaca();
+
+
+            Moto moto = motoRepo.findById(placa)
+                    .orElseThrow(() -> new EntityNotFoundException(" Moto não encontrada no banco: " + placa));
+
+
+            registro.setMoto(moto);
+        }
+        registro.setCheckIn(LocalDateTime.now());
+
+        registroRepo.save(registro);
+
+
         return "redirect:/registros";
     }
+
+
 
 
     @PostMapping("/checkout/{id}")
@@ -70,32 +93,32 @@ public class RegistroWebController {
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
-        Registro registro = registroRepo.findById(id).orElseThrow(()-> new IllegalArgumentException("Registro Invalido " + id));
+        Registro registro = registroRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Registro inválido: " + id));
         model.addAttribute("registro", registro);
+        model.addAttribute("motos", motoService.listarMotos()); // ✅ lista de motos pro select
         return "registros/form";
     }
 
-
-    @PostMapping("editar/{id}")
+    @PostMapping("/editar/{id}")
     public String atualizarRegistro(@PathVariable Long id,
-                                    @RequestParam String placa,
-                                    @Valid @ModelAttribute Registro registroAtualizado,BindingResult result, Model model) {
+                                    @RequestParam("placa") String placa,
+                                    @Valid @ModelAttribute Registro registroAtualizado,
+                                    BindingResult result,
+                                    Model model) {
         if (result.hasErrors()) {
             model.addAttribute("motos", motoService.listarMotos());
             return "registros/form";
         }
 
-
-      Moto moto = motoRepo.findById(placa)
+        Moto moto = motoRepo.findById(placa)
                 .orElseThrow(() -> new EntityNotFoundException("Moto não encontrada"));
 
         Registro registroExistente = registroRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Registro não encontrado"));
 
         registroExistente.setMoto(moto);
-        registroExistente.setCheckIn(LocalDateTime.now());
-
-
+        registroExistente.setCheckIn(registroAtualizado.getCheckIn()); // usa valor do form
 
         registroRepo.save(registroExistente);
 
@@ -103,7 +126,8 @@ public class RegistroWebController {
     }
 
 
-    @PostMapping("/delete/{id}")
+
+    @PostMapping("/excluir/{id}")
     public String deletarRegistro(@PathVariable Long id) {
         Registro registro = registroRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Registro não encontrado"));

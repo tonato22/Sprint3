@@ -27,7 +27,7 @@ public class Registro {
     @ManyToOne(optional = false)
     private Moto moto;
 
-    @NotNull(message = "O horário de check-in é obrigatório")
+
     private LocalDateTime checkIn;
 
     private LocalDateTime checkOut;

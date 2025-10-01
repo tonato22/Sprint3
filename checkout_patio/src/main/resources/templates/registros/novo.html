@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f6fa;
+      background: #f4f6f9;
       margin: 0;
       padding: 20px;
     }
@@ -16,102 +16,93 @@
       margin: 40px auto;
       background: #fff;
       padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    h1 {
+    h2 {
       text-align: center;
+      margin-bottom: 20px;
       color: #333;
-      margin-bottom: 25px;
     }
 
     form {
       display: flex;
       flex-direction: column;
+      gap: 15px;
     }
 
     label {
       font-weight: bold;
-      margin-bottom: 5px;
-      color: #444;
+      color: #555;
     }
 
     select, input {
       padding: 10px;
-      margin-bottom: 20px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      transition: border-color 0.3s;
-    }
-
-    select:focus, input:focus {
-      border-color: #007bff;
-      outline: none;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 16px;
+      border: 1px solid #ddd;
       border-radius: 6px;
       font-size: 14px;
-      font-weight: bold;
-      text-align: center;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .btn-save {
-      background: #28a745;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-
-    .btn-save:hover {
-      background: #218838;
-    }
-
-    .btn-back {
-      background: #6c757d;
-      color: #fff;
-      display: inline-block;
-      text-align: center;
-    }
-
-    .btn-back:hover {
-      background: #5a6268;
     }
 
     .actions {
       display: flex;
       justify-content: space-between;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-home {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .btn-home:hover {
+      background-color: #1e7e34;
     }
   </style>
 </head>
 <body>
-<th:block th:replace="fragments/header :: header"></th:block>
-
 <div class="container">
-  <h1>Novo Check-in</h1>
+  <h2>Novo Check-in</h2>
 
   <form th:action="@{/registros}" th:object="${registro}" method="post">
-    <label>Moto:</label>
-    <select name="motoId" required>
-      <option value="">-- Selecione uma moto --</option>
-      <option th:each="moto : ${motos}" th:value="${moto.id}"
-              th:text="${moto.placa} + ' - ' + ${moto.modelo}"></option>
-    </select>
+    <div>
+      <label for="moto">Selecione a Moto:</label>
+      <select id="moto" th:field="*{moto.placa}" required>
+        <option value="" disabled selected>-- Escolha uma moto --</option>
+        <option th:each="moto : ${motos}"
+                th:value="${moto.placa}"
+                th:text="${moto.placa} + ' - ' + ${moto.modelo}">
+        </option>
+      </select>
+    </div>
 
     <div class="actions">
-      <button type="submit" class="btn btn-save">Salvar Check-in</button>
-      <a th:href="@{/registros}" class="btn btn-back">Voltar</a>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a th:href="@{/registros}" class="btn btn-home">Voltar</a>
     </div>
   </form>
-</div>
 
-<th:block th:replace="fragments/footer :: footer"></th:block>
+</div>
 </body>
 </html>
