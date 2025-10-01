@@ -22,6 +22,23 @@ Aplicação web desenvolvida em **Spring Boot** para gerenciamento de motos em u
 
 ---
 
+## ⚙️ Instalação e execução
+
+## 1️⃣ Clonar o repositório
+
+- git clone https://github.com/tonato22/Sprint3.git
+- cd Sprint3/checkout_patio
+
+## 2️⃣ Rodar a aplicação
+
+- mvn spring-boot:run
+
+## 3️⃣ Acessar no navegador
+
+- http://localhost:8080
+
+
+
 ## 🔑 Credenciais de acesso
 
 - Usuário: admin
