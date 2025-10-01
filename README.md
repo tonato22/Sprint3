@@ -1,55 +1,39 @@
-<<<<<<< HEAD
-# Sprint3
-=======
-# 🚀 API Check-in e Check-out de Motos no Pátio
+# 🚀 Gerenciador de Pátio
 
-Este projeto é uma API REST desenvolvida em Java utilizando Spring Boot, que tem como objetivo gerenciar o check-in e check-out de motos em um pátio. O sistema permite o cadastro de motos e o controle de suas movimentações (entrada e saída).
+Aplicação web desenvolvida em **Spring Boot** para gerenciamento de motos em um pátio, permitindo **check-in, check-out, cadastro, edição e exclusão de registros de motos**.
 
-## 🏗️ Tecnologias Utilizadas
+## 📌 Funcionalidades
+- ✅ Cadastro, listagem, edição e exclusão de motos;
+- ✅ Check-in e check-out de motos;
+- ✅ Tela inicial com navegação entre módulos;
+- ✅ Integração com banco de dados relacional via JPA/Hibernate;
+- ✅ Interface web utilizando **Thymeleaf**;
+- ✅ Validações de dados no back-end.
 
-- Java 17
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- H2 Database (banco em memória)
-- Bean Validation
-- Lombok
-- Maven
-- Tratamento centralizado de erros com ExceptionHandler
+---
 
-## 🔗 Endpoints Disponíveis
+## 🛠️ Tecnologias utilizadas
+- **Java 17+**
+- **Spring Boot 3**
+- **Thymeleaf**
+- **H2 Database**
+- **Maven**
+- **Lombok**
 
-### 🏍️ Motos
-- `GET /motos` — Lista todas as motos (com paginação e ordenação)
-- `POST /motos` — Cadastra uma nova moto
-- `GET /motos/search?placa={placa}` — Busca moto pela placa (com paginação)
+---
 
-### 📄 Registros (Movimentações)
-- `POST /registros/checkin` — Realiza o check-in da moto no pátio
-- `POST /registros/checkout` — Realiza o check-out da moto
-- `GET /registros?placa={placa}` — Lista os registros de uma moto (com paginação)
+## 🔑 Credenciais de acesso
 
-## 📦 Entidades
+- Usuário: admin
+- Senha: admin123
 
-- `Moto`: placa, modelo
-- `Registro`: data e hora de check-in e check-out, associado à moto
+## 📺 Demonstração
 
-## 🔗 Relacionamento
+- ▶️ https://www.youtube.com/watch?v=sX2iazYzeuI
 
-- Uma moto pode ter vários registros de entrada e saída.
 
-## ✅ Funcionalidades Atendidas
+## 👨‍💻 Equipe
 
-- CRUD completo de `Moto` e `Registro`
-- Relacionamento entre entidades
-- Validação de campos com Bean Validation
-- Paginação, ordenação e busca por parâmetros
-- Tratamento centralizado de erros
-- Uso de DTOs
-- Banco H2 configurado para testes
-
-  ## Nomes:
 - Gustavo Tonato - RM555393
 - Diogo Paquete Weyne - RM558380
 - João Victor De Souza - RM555290
->>>>>>> 7cc2ce5 (Update)
